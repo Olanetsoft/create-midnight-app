@@ -13,6 +13,7 @@
     "build": "tsc",
     "deploy": "node dist/deploy.js",
     "cli": "node dist/cli.js",
+    "check-balance": "npm run build && node dist/check-balance.js",
     "reset": "rm -rf contracts/managed deployment.json dist && npm run compile",
     "validate": "tsc --noEmit && npm run compile",
     "clean": "rm -rf dist contracts/managed deployment.json",

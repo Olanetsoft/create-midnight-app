@@ -87,6 +87,10 @@ Builds your TypeScript source code to JavaScript in the `dist/` directory
 
 Deploys your compiled contract to the Midnight testnet
 
+### `npm run check-balance`
+
+Checks your wallet balance. Useful for verifying if test tokens from the faucet have arrived before deploying.
+
 ## Project Structure
 
 ```
@@ -175,6 +179,24 @@ PROOF_SERVER_URL=http://localhost:6300
 ⚠️ **Important**: Never commit your `.env` file or share your wallet seed phrase!
 
 ## Troubleshooting
+
+### Waiting for faucet funds
+
+If your deployment is waiting for funds from the testnet faucet:
+
+```bash
+# Option 1: Let the script wait (it will auto-detect funds)
+# Just leave it running after requesting from the faucet
+
+# Option 2: Stop and check manually
+# Press Ctrl+C to stop, then:
+npm run check-balance
+
+# Once funded, deploy:
+npm run deploy
+```
+
+💡 **Note**: Faucet transactions typically take 2-5 minutes to process.
 
 ### Port 6300 already in use
 

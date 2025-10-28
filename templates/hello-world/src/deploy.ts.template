@@ -84,10 +84,18 @@ async function main() {
     let balance = state.balances[nativeToken()] || 0n;
 
     if (balance === 0n) {
-      console.log(`Your wallet balance is: 0`);
-      console.log(
-        "Visit: https://midnight.network/test-faucet to get some funds."
-      );
+      console.log(`Your wallet balance is: 0 DUST`);
+      console.log("\n❌ Wallet needs funding to deploy contracts.\n");
+      console.log("📝 To get test tokens:");
+      console.log("   1. Visit: https://midnight.network/test-faucet");
+      console.log("   2. Paste your wallet address (shown above)");
+      console.log("   3. Request tokens from the faucet\n");
+      console.log("⏱️  Faucet transactions can take 2-5 minutes to process.\n");
+      console.log("💡 Options while waiting:");
+      console.log("   • Let this script wait (it will auto-detect when funds arrive)");
+      console.log("   • OR press Ctrl+C to stop, then check balance with:");
+      console.log("     npm run check-balance");
+      console.log("   • Once funded, run: npm run deploy\n");
       console.log(`Waiting to receive tokens...`);
       balance = await waitForFunds(wallet);
     }
