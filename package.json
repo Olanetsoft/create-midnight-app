@@ -1,0 +1,60 @@
+{
+  "name": "create-midnight-app",
+  "version": "1.0.0",
+  "description": "Create Midnight Network applications with zero configuration",
+  "main": "dist/index.js",
+  "bin": {
+    "create-midnight-app": "./bin/create-midnight-app.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node dist/test.js",
+    "test-local": "npm run build && npm link && npx create-midnight-app test-app",
+    "clean": "rm -rf dist test-app"
+  },
+  "keywords": [
+    "midnight",
+    "blockchain",
+    "zero-knowledge",
+    "privacy",
+    "scaffold",
+    "cli",
+    "create-app"
+  ],
+  "author": "Midnight Network",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "cross-spawn": "^7.0.3",
+    "fs-extra": "^11.1.1",
+    "mustache": "^4.2.0",
+    "ora": "^5.4.1",
+    "prompts": "^2.4.2",
+    "semver": "^7.5.4",
+    "validate-npm-package-name": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.2",
+    "@types/fs-extra": "^11.0.1",
+    "@types/mustache": "^4.2.2",
+    "@types/node": "^20.0.0",
+    "@types/prompts": "^2.4.4",
+    "@types/validate-npm-package-name": "^4.0.2",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midnightntwrk/create-midnight-app.git"
+  }
+}

@@ -1,0 +1,19 @@
+# Source files
+src/
+tsconfig.json
+nodemon.json
+
+# Test files
+test-app/
+
+# Development files
+.env*
+*.log
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
