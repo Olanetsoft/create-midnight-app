@@ -122,7 +122,8 @@ export async function createApp(
   } else {
     packageManager = detectPackageManager();
     console.log(
-      chalk.gray(`ℹ Detected package manager: ${chalk.cyan(packageManager)}\n`)
+      chalk.bold("[" + chalk.blue("i") + "] ") +
+        chalk.gray(`package manager: ${chalk.cyan(packageManager)}\n`)
     );
   }
 

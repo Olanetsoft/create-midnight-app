@@ -21,8 +21,7 @@ export class SetupGuide {
     const template = getTemplate(templateName);
     if (!template || template.type !== "remote") return;
 
-    console.log();
-    console.log(chalk.blue.bold("📚 Setup Instructions\n"));
+    console.log(chalk.bold("\n[" + chalk.blue("→") + "] Next Steps\n"));
 
     if (templateName === "counter") {
       this.displayCounterInstructions(projectName, packageManager);
@@ -47,70 +46,49 @@ export class SetupGuide {
         : "bun install";
     const runCmd = pm === "npm" ? "npm run" : pm;
 
-    console.log(chalk.white.bold("📂 Project Structure:"));
+    console.log(chalk.gray("    project structure:"));
+    console.log(chalk.gray("    ├─ contract/     smart contract (compact)"));
+    console.log(chalk.gray("    └─ counter-cli/  cli interface"));
+    console.log();
+
+    console.log(chalk.gray("    $ ") + chalk.cyan(`cd ${projectName}`));
+    console.log(chalk.gray("    $ ") + chalk.cyan(installCmd));
     console.log(
-      chalk.gray("  contract/     - Smart contract in Compact language")
+      chalk.gray("    $ ") + chalk.cyan(`cd contract && ${runCmd} compact`)
     );
-    console.log(chalk.gray("  counter-cli/  - Command-line interface"));
-    console.log();
-
-    console.log(chalk.white.bold("🚀 Getting Started:\n"));
-
-    console.log(chalk.yellow("1.") + " Navigate to your project:");
-    console.log(`   ${chalk.cyan(`cd ${projectName}`)}`);
-    console.log();
-
-    console.log(chalk.yellow("2.") + " Install dependencies:");
-    console.log(`   ${chalk.cyan(installCmd)}`);
-    console.log();
-
-    console.log(chalk.yellow("3.") + " Compile the smart contract:");
-    console.log(`   ${chalk.cyan(`cd contract && ${runCmd} compact`)}`);
     console.log(
-      chalk.gray("   (First time may download ~500MB of ZK parameters)")
+      chalk.gray("      (downloads ~500MB zk parameters on first run)")
+    );
+    console.log(chalk.gray("    $ ") + chalk.cyan(`${runCmd} build`));
+    console.log(
+      chalk.gray("    $ ") + chalk.cyan(`cd ../counter-cli && ${runCmd} build`)
     );
     console.log();
 
-    console.log(chalk.yellow("4.") + " Build the project:");
-    console.log(`   ${chalk.cyan(`${runCmd} build`)}`);
-    console.log(`   ${chalk.cyan(`cd ../counter-cli && ${runCmd} build`)}`);
+    console.log(chalk.bold("[" + chalk.magenta("i") + "] Proof Server\n"));
+    console.log(
+      chalk.gray("    $ ") +
+        chalk.cyan(
+          "docker run -p 6300:6300 midnightnetwork/proof-server -- 'midnight-proof-server --network testnet'"
+        )
+    );
+    console.log(chalk.gray("      keep this terminal running"));
     console.log();
 
+    console.log(chalk.bold("[" + chalk.green("▶") + "] Run Application\n"));
     console.log(
-      chalk.yellow("5.") + " Start the proof server (in a new terminal):"
-    );
-    console.log(
-      chalk.cyan(
-        "   docker run -p 6300:6300 midnightnetwork/proof-server -- 'midnight-proof-server --network testnet'"
-      )
-    );
-    console.log(chalk.gray("   Keep this running!"));
-    console.log();
-
-    console.log(chalk.yellow("6.") + " Run the Counter DApp:");
-    console.log(
-      `   ${chalk.cyan(`cd counter-cli && ${runCmd} start-testnet-remote`)}`
+      chalk.gray("    $ ") +
+        chalk.cyan(`cd counter-cli && ${runCmd} start-testnet-remote`)
     );
     console.log();
 
-    console.log(chalk.magenta.bold("💡 Important Notes:\n"));
+    console.log(chalk.bold("[" + chalk.yellow("!") + "] Important\n"));
+    console.log(chalk.gray("    • create wallet and fund from faucet"));
     console.log(
-      chalk.gray(
-        "  • You'll need to create a wallet and fund it from the faucet"
-      )
+      chalk.gray("    • testnet faucet: https://midnight.network/test-faucet")
     );
-    console.log(
-      chalk.gray("  • Testnet faucet: https://midnight.network/test-faucet")
-    );
-    console.log(chalk.gray("  • Funding takes 2-3 minutes to process"));
-    console.log();
-
-    console.log(chalk.white.bold("📖 Full Guide:"));
-    console.log(
-      chalk.gray(
-        "  See README.md for detailed instructions and troubleshooting"
-      )
-    );
+    console.log(chalk.gray("    • funding takes 2-3 minutes"));
+    console.log(chalk.gray("    • see README.md for detailed guide"));
     console.log();
   }
 
@@ -121,19 +99,11 @@ export class SetupGuide {
     const template = getTemplate(templateName);
     if (!template) return;
 
-    console.log();
-    console.log(chalk.green("✓ Successfully cloned example project!"));
-    console.log();
+    console.log(chalk.bold("\n[" + chalk.green("✓") + "] Clone Complete\n"));
 
     if (template.requiresCompactCompiler) {
-      console.log(
-        chalk.yellow(
-          "⚠ This project requires the Compact compiler to be installed."
-        )
-      );
-      console.log(
-        chalk.gray("  Follow the setup instructions below to install it.")
-      );
+      console.log(chalk.gray("    compact compiler required"));
+      console.log(chalk.gray("    follow setup instructions below"));
       console.log();
     }
   }

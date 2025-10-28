@@ -25,7 +25,9 @@ program
   .option("--skip-git", "Skip git repository initialization")
   .option("--verbose", "Show detailed output")
   .action(async (projectDirectory, options) => {
-    console.log(chalk.blue.bold("🌙 Create Midnight App\n"));
+    console.log(
+      chalk.bold.cyan("\ncreate-midnight-app") + chalk.gray(" v0.2.1\n")
+    );
 
     try {
       await createApp(projectDirectory, options);

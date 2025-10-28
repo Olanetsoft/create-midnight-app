@@ -83,41 +83,41 @@ export class RequirementChecker {
    * Display requirement check results
    */
   static displayResults(checks: RequirementCheck[]): boolean {
-    console.log(chalk.blue.bold("\n🔍 Checking Requirements\n"));
+    console.log(chalk.bold("[" + chalk.cyan("✓") + "] Requirements Check\n"));
 
     let allPassed = true;
 
     for (const check of checks) {
+      const name = check.name.toLowerCase().padEnd(16);
       if (check.found) {
-        console.log(
-          `${chalk.green("✓")} ${check.name} ${
-            check.version ? chalk.gray(`(${check.version})`) : ""
-          }`
-        );
+        const version = check.version ? chalk.gray(`${check.version}`) : "";
+        const status = chalk.green("[installed]");
+        console.log(`    ${chalk.gray(name)} ${version} ${status}`);
       } else {
         allPassed = false;
-        console.log(
-          `${chalk.red("✗")} ${check.name} ${chalk.red("not found")}`
-        );
+        const status = chalk.red("[missing]");
+        console.log(`    ${chalk.gray(name)} ${status}`);
       }
     }
 
     if (!allPassed) {
       console.log();
-      console.log(chalk.yellow.bold("⚠ Missing Requirements:\n"));
+      console.log(
+        chalk.bold("[" + chalk.yellow("!") + "] Missing Dependencies\n")
+      );
 
       for (const check of checks.filter((c) => !c.found)) {
-        console.log(chalk.white(`${check.name}:`));
+        console.log(chalk.white(`    ${check.name}:`));
         if (check.installCommand) {
-          console.log(chalk.gray(`  Install: ${check.installCommand}`));
+          console.log(chalk.gray(`    $ ${check.installCommand}`));
         }
         if (check.installUrl) {
-          console.log(chalk.gray(`  Visit: ${check.installUrl}`));
+          console.log(chalk.gray(`    → ${check.installUrl}`));
         }
         console.log();
       }
     } else {
-      console.log(chalk.green("\n✓ All requirements met!\n"));
+      console.log(chalk.gray("\n    all dependencies satisfied\n"));
     }
 
     return allPassed;
