@@ -1,10 +1,10 @@
 {
-  "name": "create-midnight-app",
+  "name": "create-mn-app",
   "version": "1.0.0",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
-    "create-midnight-app": "./bin/create-midnight-app.js"
+    "create-mn-app": "./bin/create-midnight-app.js"
   },
   "files": [
     "bin",
