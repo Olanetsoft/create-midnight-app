@@ -8,7 +8,7 @@ Create Midnight Network applications with zero configuration.
 ```bash
 npx create-mn-app my-app
 cd my-app
-npm run dev
+npm run setup
 ```
 
 ## Features
@@ -30,8 +30,8 @@ npx create-mn-app my-midnight-app
 # Navigate to your project
 cd my-midnight-app
 
-# Start development server with hot reloading
-npm run dev
+# Setup and deploy your contract
+npm run setup
 ```
 
 ## What's Included?
@@ -49,14 +49,6 @@ Your generated project includes:
 ## Available Commands
 
 Once your project is created, you can run:
-
-### `npm run dev`
-
-Starts the development server with:
-
-- Docker-based proof server on port 6300
-- File watcher for automatic recompilation
-- Hot reloading for contract changes
 
 ### `npm run setup`
 

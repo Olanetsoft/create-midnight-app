@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "1.0.5",
+  "version": "0.0.6",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {

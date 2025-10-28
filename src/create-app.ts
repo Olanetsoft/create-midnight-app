@@ -94,11 +94,8 @@ export async function createApp(
   console.log(chalk.yellow("  1.") + " Navigate to your project:");
   console.log(`     ${chalk.cyan(`cd ${projectName}`)}`);
   console.log();
-  console.log(chalk.yellow("  2.") + " Start the development server:");
-  console.log(`     ${chalk.cyan("npm run dev")}`);
-  console.log(
-    chalk.gray("     (Starts proof server + watches for file changes)")
-  );
+  console.log(chalk.yellow("  2.") + " Setup and deploy your contract:");
+  console.log(`     ${chalk.cyan("npm run setup")}`);
   console.log();
   console.log(chalk.white.bold("📚 Available Commands:"));
   console.log();
