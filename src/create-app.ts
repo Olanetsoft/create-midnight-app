@@ -3,17 +3,29 @@ import fs from "fs-extra";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
-import { validateProjectName } from "./utils/validation";
-import { PackageInstaller } from "./installers/package-installer";
-import { TemplateManager } from "./utils/template-manager";
-import { WalletGenerator } from "./installers/wallet-generator";
-import { ProofServerSetup } from "./installers/proof-server-setup";
-import { GitUtils } from "./utils/git-utils";
+import { validateProjectName } from "./utils/validation.js";
+import { PackageInstaller } from "./installers/package-installer.js";
+import { TemplateManager } from "./utils/template-manager.js";
+import { WalletGenerator } from "./installers/wallet-generator.js";
+import { ProofServerSetup } from "./installers/proof-server-setup.js";
+import { GitUtils } from "./utils/git-utils.js";
+import {
+  detectPackageManager,
+  getPackageManagerInfo,
+  type PackageManager,
+} from "./utils/package-manager.js";
+import {
+  getAllTemplates,
+  getTemplate,
+  isValidTemplate,
+} from "./utils/templates.js";
 
 export interface CreateAppOptions {
-  template: string;
+  template?: string;
   useNpm?: boolean;
+  useYarn?: boolean;
   usePnpm?: boolean;
+  useBun?: boolean;
   skipInstall?: boolean;
   skipGit?: boolean;
   verbose?: boolean;
@@ -24,6 +36,8 @@ export async function createApp(
   options: CreateAppOptions
 ): Promise<void> {
   let projectName = projectDirectory;
+  let selectedTemplate = options.template || "hello-world";
+  let packageManager: PackageManager;
 
   // Interactive mode if no project name provided
   if (!projectName) {
@@ -45,6 +59,71 @@ export async function createApp(
 
     projectName = response.projectName;
   }
+
+  // Template selection if not provided
+  if (!options.template) {
+    const allTemplates = getAllTemplates();
+    const templateChoices = allTemplates.map((t) => ({
+      title: t.comingSoon
+        ? `${t.display} ${chalk.gray("(Coming Soon)")}`
+        : t.display,
+      value: t.name,
+      description: t.description,
+      disabled: !t.available,
+    }));
+
+    const response = await prompts({
+      type: "select",
+      name: "template",
+      message: "Which template would you like to use?",
+      choices: templateChoices,
+      initial: 0,
+    });
+
+    if (!response.template) {
+      console.log(chalk.yellow("\n✖ Operation cancelled."));
+      process.exit(0);
+    }
+
+    selectedTemplate = response.template;
+  }
+
+  // Validate template
+  if (!isValidTemplate(selectedTemplate)) {
+    const template = getTemplate(selectedTemplate);
+    if (template && template.comingSoon) {
+      console.error(
+        chalk.red(`✖ Template "${selectedTemplate}" is coming soon!`)
+      );
+      console.log(chalk.yellow("\n📢 Available templates:"));
+      getAllTemplates()
+        .filter((t) => t.available)
+        .forEach((t) => {
+          console.log(`  • ${chalk.cyan(t.name)} - ${t.description}`);
+        });
+    } else {
+      console.error(chalk.red(`✖ Template "${selectedTemplate}" not found.`));
+    }
+    process.exit(1);
+  }
+
+  // Detect or select package manager
+  if (options.useNpm) {
+    packageManager = "npm";
+  } else if (options.useYarn) {
+    packageManager = "yarn";
+  } else if (options.usePnpm) {
+    packageManager = "pnpm";
+  } else if (options.useBun) {
+    packageManager = "bun";
+  } else {
+    packageManager = detectPackageManager();
+    console.log(
+      chalk.gray(`ℹ Detected package manager: ${chalk.cyan(packageManager)}\n`)
+    );
+  }
+
+  const pmInfo = getPackageManagerInfo(packageManager);
 
   const validation = validateProjectName(projectName!);
   if (!validation.valid) {
@@ -76,9 +155,17 @@ export async function createApp(
   }
 
   console.log(`Creating a new Midnight app in ${chalk.green(projectPath)}.\n`);
+  console.log(chalk.gray(`Template: ${chalk.cyan(selectedTemplate)}`));
+  console.log();
 
   // Main creation process
-  await createProject(projectPath, projectName!, options);
+  await createProject(
+    projectPath,
+    projectName!,
+    selectedTemplate,
+    packageManager,
+    options
+  );
 
   // Success message and instructions
   console.log();
@@ -95,20 +182,26 @@ export async function createApp(
   console.log(`     ${chalk.cyan(`cd ${projectName}`)}`);
   console.log();
   console.log(chalk.yellow("  2.") + " Setup and deploy your contract:");
-  console.log(`     ${chalk.cyan("npm run setup")}`);
+  console.log(`     ${chalk.cyan(`${pmInfo.runCommand} setup`)}`);
   console.log();
   console.log(chalk.white.bold("📚 Available Commands:"));
   console.log();
-  console.log(`  ${chalk.cyan("npm run setup")}`);
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} setup`)}`);
   console.log(chalk.gray("    Compile contract, build, and deploy"));
   console.log();
-  console.log(`  ${chalk.cyan("npm run cli")}`);
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} cli`)}`);
   console.log(chalk.gray("    Interactive CLI to test your contract"));
   console.log();
-  console.log(`  ${chalk.cyan("npm run compile")}`);
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} check-balance`)}`);
+  console.log(chalk.gray("    Check your wallet balance"));
+  console.log();
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} health-check`)}`);
+  console.log(chalk.gray("    Verify your environment setup"));
+  console.log();
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} compile`)}`);
   console.log(chalk.gray("    Compile Compact contracts"));
   console.log();
-  console.log(`  ${chalk.cyan("npm run build")}`);
+  console.log(`  ${chalk.cyan(`${pmInfo.runCommand} build`)}`);
   console.log(chalk.gray("    Build TypeScript to JavaScript"));
   console.log();
   console.log(chalk.green.bold("━".repeat(60)));
@@ -131,13 +224,11 @@ export async function createApp(
 async function createProject(
   projectPath: string,
   projectName: string,
+  template: string,
+  packageManager: PackageManager,
   options: CreateAppOptions
 ): Promise<void> {
-  const packageManager = options.usePnpm
-    ? "pnpm"
-    : options.useNpm
-    ? "npm"
-    : "yarn";
+  const pmInfo = getPackageManagerInfo(packageManager);
 
   // Create project directory
   await fs.ensureDir(projectPath);
@@ -146,7 +237,7 @@ async function createProject(
   // Initialize template
   const templateSpinner = ora("Creating project structure...").start();
   try {
-    const templateManager = new TemplateManager(options.template);
+    const templateManager = new TemplateManager(template);
     await templateManager.scaffold(projectPath, projectName);
     templateSpinner.succeed("Project structure created");
   } catch (error) {
@@ -181,7 +272,7 @@ async function createProject(
       console.log(
         chalk.yellow("\n⚠ You can install dependencies manually by running:")
       );
-      console.log(chalk.cyan(`  ${packageManager} install`));
+      console.log(chalk.cyan(`  ${pmInfo.installCommand}`));
     }
   }
 
@@ -223,7 +314,7 @@ async function createProject(
       compileSpinner.succeed("Contract compiled successfully");
     } catch (error) {
       compileSpinner.warn(
-        'Contract compilation skipped - run "npm run compile" manually'
+        `Contract compilation skipped - run "${pmInfo.runCommand} compile" manually`
       );
     }
   }

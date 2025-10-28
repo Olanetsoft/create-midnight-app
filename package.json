@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
@@ -46,7 +46,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/mustache": "^4.2.2",
     "@types/node": "^20.0.0",
-    "@types/prompts": "^2.4.4",
+    "@types/prompts": "^2.4.9",
     "@types/validate-npm-package-name": "^4.0.2",
     "typescript": "^5.0.0"
   },

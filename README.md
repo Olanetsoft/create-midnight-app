@@ -11,26 +11,47 @@ cd my-app
 npm run setup
 ```
 
-## Features
+## ✨ Features
 
-- ⚡ **Zero configuration** - Works out of the box with sensible defaults
-- 🔧 **Modern tooling** - TypeScript, hot reloading, auto-compilation
-- 🛡️ **Best practices** - Secure wallet generation, proper project structure
-- 🚀 **Fast setup** - From zero to working app in 60 seconds
-- 🎯 **Developer friendly** - Clear error messages, helpful guides
+- 🎯 **Interactive Setup** - Guided project creation with template selection
+- 📦 **Smart Package Manager** - Auto-detects your preferred package manager (npm/yarn/pnpm/bun)
+- 🏥 **Health Checks** - Verify your environment is ready before development
+- ⚡ **Zero Configuration** - Works out of the box with sensible defaults
+- 🔧 **Modern Tooling** - TypeScript, hot reloading, auto-compilation
+- 🛡️ **Best Practices** - Secure wallet generation, proper project structure
+- 🚀 **Fast Setup** - From zero to working app in 60 seconds
+- � **Helpful Errors** - Clear error messages with actionable solutions
 - 📦 **ES Modules** - Modern JavaScript module system
-- 🐳 **Docker integration** - Automated proof server setup
+- 🐳 **Docker Integration** - Automated proof server setup
 
-## Quick Start
+## 🚀 Quick Start
+
+### Interactive Mode (Recommended)
 
 ```bash
-# Create a new Midnight app
+npx create-mn-app
+```
+
+You'll be prompted to:
+
+1. **Enter your project name** - Choose a descriptive name for your app
+2. **Select a template** - Pick from available templates or see what's coming soon
+3. **Choose configuration** - Package manager, git, and other options
+
+### Command Line Mode
+
+```bash
+# Create with defaults
 npx create-mn-app my-midnight-app
 
-# Navigate to your project
-cd my-midnight-app
+# Create with specific template
+npx create-mn-app my-app --template hello-world
 
-# Setup and deploy your contract
+# Use specific package manager
+npx create-mn-app my-app --use-pnpm
+
+# Navigate and setup
+cd my-app
 npm run setup
 ```
 
@@ -46,7 +67,7 @@ Your generated project includes:
 - 📋 **Environment Config** - `.env` file with network configuration
 - 🔄 **Git Ready** - Initialized git repository with proper `.gitignore`
 
-## Available Commands
+## 📚 Available Commands
 
 Once your project is created, you can run:
 
@@ -58,6 +79,19 @@ Complete setup pipeline:
 2. Builds TypeScript to JavaScript
 3. Deploys contracts to the network
 
+### `npm run health-check`
+
+🏥 Verify your development environment:
+
+- ✓ Node.js version (18+)
+- ✓ Docker availability
+- ✓ Environment configuration
+- ✓ Wallet setup
+- ✓ Dependencies installed
+- ✓ Project built correctly
+
+Run this command before development to catch issues early!
+
 ### `npm run cli`
 
 Opens an interactive command-line interface to:
@@ -66,6 +100,10 @@ Opens an interactive command-line interface to:
 - Store messages in the contract
 - Retrieve stored messages
 - Test contract functionality
+
+### `npm run check-balance`
+
+Checks your wallet balance. Useful for verifying if test tokens from the faucet have arrived before deploying.
 
 ### `npm run compile`
 
@@ -78,10 +116,6 @@ Builds your TypeScript source code to JavaScript in the `dist/` directory
 ### `npm run deploy`
 
 Deploys your compiled contract to the Midnight testnet
-
-### `npm run check-balance`
-
-Checks your wallet balance. Useful for verifying if test tokens from the faucet have arrived before deploying.
 
 ## Project Structure
 
@@ -104,9 +138,13 @@ my-midnight-app/
 └── nodemon.json
 ```
 
-## Templates
+## 🎨 Templates
 
-### Hello World (Default)
+Choose from various templates to kickstart your Midnight project:
+
+### ✅ Available Now
+
+#### **Hello World** (Default)
 
 A simple message storage contract demonstrating:
 
@@ -115,7 +153,29 @@ A simple message storage contract demonstrating:
 - Contract deployment
 - Interactive testing
 
-**More templates coming soon!**
+```bash
+npx create-mn-app my-app --template hello-world
+```
+
+### 🔜 Coming Soon
+
+#### **Counter**
+
+Simple increment/decrement app demonstrating state management
+
+#### **Bulletin Board (Bboard)**
+
+Bulletin board with multi-user interactions and privacy patterns
+
+#### **Decentralized Exchange (DEX)**
+
+Decentralized exchange using OpenZeppelin FungibleToken
+
+#### **Midnight Kitties**
+
+Full stack DApp using NFT smart contract library (Crypto Kitties on Midnight)
+
+_These templates are under development. Star the repo to stay updated!_
 
 ## Requirements
 
@@ -123,34 +183,70 @@ A simple message storage contract demonstrating:
 - **Docker** (for running the proof server)
 - **npm**, **yarn**, or **pnpm** package manager
 
-## Package Manager Options
+## 📦 Package Manager Options
 
-You can use your preferred package manager:
+The CLI automatically detects your preferred package manager! It checks:
+
+1. Lock files in your directory (package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb)
+2. Environment variables set by your package manager
+3. Available package managers on your system
+
+You can also explicitly specify:
 
 ```bash
-# npm (default)
-npx create-mn-app my-app
+# npm
+npx create-mn-app my-app --use-npm
 
 # Yarn
-npx create-mn-app my-app --yarn
+npx create-mn-app my-app --use-yarn
 
 # pnpm
-npx create-mn-app my-app --pnpm
+npx create-mn-app my-app --use-pnpm
+
+# Bun
+npx create-mn-app my-app --use-bun
 ```
 
-## Usage Options
+All commands in the success message will use your chosen package manager! 🎉
+
+## ⚙️ CLI Options
 
 ```bash
 npx create-mn-app [project-name] [options]
 
+Arguments:
+  project-name              Name of your project (interactive prompt if omitted)
+
 Options:
-  --template <name>    Specify a template (default: hello-world)
-  --yarn              Use Yarn as package manager
-  --pnpm              Use pnpm as package manager
-  --npm               Use npm as package manager
-  --skip-install      Skip dependency installation
-  --skip-git          Skip git initialization
-  -h, --help          Display help information
+  -t, --template <name>     Template to use (hello-world, counter, bboard, dex, midnight-kitties)
+  --use-npm                 Use npm as package manager
+  --use-yarn                Use Yarn as package manager
+  --use-pnpm                Use pnpm as package manager
+  --use-bun                 Use bun as package manager
+  --skip-install            Skip dependency installation
+  --skip-git                Skip git initialization
+  --verbose                 Show detailed output including stack traces
+  -h, --help                Display help information
+  -V, --version             Display version number
+```
+
+### Examples
+
+```bash
+# Interactive mode (recommended)
+npx create-mn-app
+
+# With project name
+npx create-mn-app my-midnight-dapp
+
+# Specific template and package manager
+npx create-mn-app my-dex --template dex --use-pnpm
+
+# Skip installation (for CI/CD)
+npx create-mn-app my-app --skip-install --skip-git
+
+# Verbose output for debugging
+npx create-mn-app my-app --verbose
 ```
 
 ## Environment Configuration
@@ -170,7 +266,34 @@ PROOF_SERVER_URL=http://localhost:6300
 
 ⚠️ **Important**: Never commit your `.env` file or share your wallet seed phrase!
 
-## Troubleshooting
+## 🔧 Troubleshooting
+
+### Node.js version error
+
+If you see "Node.js Version Error":
+
+```bash
+# Check your version
+node --version
+
+# Install Node.js 18+ from https://nodejs.org
+# Or use nvm:
+nvm install --lts
+nvm use --lts
+```
+
+The CLI automatically checks for Node.js 18+ before running!
+
+### Environment issues
+
+Run the health check to diagnose problems:
+
+```bash
+cd my-app
+npm run health-check
+```
+
+This will show you exactly what needs to be fixed. ✨
 
 ### Waiting for faucet funds
 
@@ -217,6 +340,21 @@ Ensure Docker Desktop is running before starting the development server:
 
 ```bash
 docker --version
+
+# If not installed, get it from:
+# https://docker.com
+```
+
+### Permission errors
+
+If you encounter EACCES errors:
+
+```bash
+# Fix npm permissions (recommended)
+# See: https://docs.npmjs.com/resolving-eacces-permissions-errors
+
+# Or use a version manager like nvm (better solution)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 ```
 
 ## Learn More

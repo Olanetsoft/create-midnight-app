@@ -1,17 +1,26 @@
 import { Command } from "commander";
 import chalk from "chalk";
-import { createApp } from "./create-app";
+import { createApp } from "./create-app.js";
+import { ErrorHandler } from "./utils/error-handler.js";
 
 const program = new Command();
+
+// Check Node.js version before anything else
+ErrorHandler.checkNodeVersion(18);
 
 program
   .name("create-midnight-app")
   .description("Create a new Midnight Network application")
-  .version("1.0.0")
+  .version("0.1.0")
   .argument("[project-directory]", "Directory name for your project")
-  .option("-t, --template <name>", "Template to use", "hello-world")
-  .option("--use-npm", "Use npm instead of yarn")
-  .option("--use-pnpm", "Use pnpm instead of yarn")
+  .option(
+    "-t, --template <name>",
+    "Template to use (hello-world, counter, bboard, dex, midnight-kitties)"
+  )
+  .option("--use-npm", "Use npm explicitly")
+  .option("--use-yarn", "Use yarn explicitly")
+  .option("--use-pnpm", "Use pnpm explicitly")
+  .option("--use-bun", "Use bun explicitly")
   .option("--skip-install", "Skip package installation")
   .option("--skip-git", "Skip git repository initialization")
   .option("--verbose", "Show detailed output")
@@ -21,13 +30,24 @@ program
     try {
       await createApp(projectDirectory, options);
     } catch (error) {
+      console.error();
       console.error(
-        chalk.red("✖ Error creating app:"),
-        error instanceof Error ? error.message : error
+        ErrorHandler.formatError(
+          error instanceof Error ? error : new Error(String(error)),
+          "creating app"
+        )
       );
-      if (options.verbose && error instanceof Error) {
-        console.error(chalk.gray(error.stack));
+
+      if (error instanceof Error) {
+        ErrorHandler.suggestSolution(error);
+
+        if (options.verbose && error.stack) {
+          console.error(chalk.gray("Stack trace:"));
+          console.error(chalk.gray(error.stack));
+          console.error();
+        }
       }
+
       process.exit(1);
     }
   });

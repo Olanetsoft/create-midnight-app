@@ -2,7 +2,7 @@ import { spawn } from "cross-spawn";
 import path from "path";
 
 export class PackageInstaller {
-  constructor(private packageManager: "npm" | "yarn" | "pnpm") {}
+  constructor(private packageManager: "npm" | "yarn" | "pnpm" | "bun") {}
 
   async install(projectPath: string): Promise<void> {
     return new Promise((resolve, reject) => {
