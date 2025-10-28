@@ -378,7 +378,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 - 📖 [Midnight Documentation](https://docs.midnight.network)
 - 🚀 [Getting Started Guide](https://docs.midnight.network/getting-started)
 - 💬 [Midnight Discord Community](https://discord.gg/midnight)
-- 🐙 [GitHub Repository](https://github.com/Olanetsoft/create-midnight-app)
+- 🐙 [GitHub Repository](https://github.com/Olanetsoft/create-mn-app)
 
 ## Contributing
 

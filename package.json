@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
@@ -16,7 +16,7 @@
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build",
     "test": "npm run build && node dist/test.js",
-    "test-local": "npm run build && npm link && npx create-midnight-app test-app",
+    "test-local": "npm run build && npm link && npx create-mn-app test-app",
     "clean": "rm -rf dist test-app"
   },
   "keywords": [

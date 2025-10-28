@@ -20,7 +20,7 @@ export class GitUtils {
     await this.runGitCommand(projectPath, [
       "commit",
       "-m",
-      "Initial commit from create-midnight-app",
+      "Initial commit from create-mn-app",
     ]);
   }
 

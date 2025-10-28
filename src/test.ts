@@ -3,7 +3,7 @@ import path from "path";
 import { createApp } from "./create-app";
 
 async function testCreateApp() {
-  console.log("🧪 Testing create-midnight-app...\n");
+  console.log("🧪 Testing create-mn-app...\n");
 
   const testDir = path.join(process.cwd(), "test-app");
 
