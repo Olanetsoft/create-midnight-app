@@ -11,7 +11,7 @@ ErrorHandler.checkNodeVersion(22);
 program
   .name("create-mn-app")
   .description("Create a new Midnight Network application")
-  .version("0.2.3")
+  .version("0.2.4")
   .argument("[project-directory]", "Directory name for your project")
   .option(
     "-t, --template <name>",
@@ -25,7 +25,7 @@ program
   .option("--skip-git", "Skip git repository initialization")
   .option("--verbose", "Show detailed output")
   .action(async (projectDirectory, options) => {
-    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.2.3\n"));
+    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.2.4\n"));
 
     try {
       await createApp(projectDirectory, options);
