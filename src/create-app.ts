@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
+import { distance } from "fastest-levenshtein";
 import { validateProjectName } from "./utils/validation.js";
 import { PackageInstaller } from "./installers/package-installer.js";
 import { TemplateManager } from "./utils/template-manager.js";
@@ -12,6 +13,7 @@ import { GitUtils } from "./utils/git-utils.js";
 import { GitCloner } from "./utils/git-cloner.js";
 import { RequirementChecker } from "./utils/requirement-checker.js";
 import { SetupGuide } from "./utils/setup-guide.js";
+import { debug, enableDebug } from "./utils/debug.js";
 import {
   detectPackageManager,
   getPackageManagerInfo,
@@ -34,13 +36,45 @@ export interface CreateAppOptions {
   verbose?: boolean;
 }
 
+/**
+ * Find the closest matching template name for typo suggestions
+ */
+function findSimilarTemplate(input: string): string | null {
+  const templates = getAllTemplates()
+    .filter((t) => t.available)
+    .map((t) => t.name);
+
+  let closest = templates[0];
+  let minDistance = distance(input.toLowerCase(), closest.toLowerCase());
+
+  for (const template of templates) {
+    const d = distance(input.toLowerCase(), template.toLowerCase());
+    if (d < minDistance) {
+      minDistance = d;
+      closest = template;
+    }
+  }
+
+  // Only suggest if it's close enough (threshold: 3 characters difference)
+  return minDistance <= 3 ? closest : null;
+}
+
 export async function createApp(
   projectDirectory: string | undefined,
   options: CreateAppOptions
 ): Promise<void> {
+  // Enable debug mode if verbose flag is set
+  if (options.verbose) {
+    enableDebug();
+    debug("Debug mode enabled");
+    debug("Options:", options);
+  }
+
   let projectName = projectDirectory;
   let selectedTemplate = options.template || "hello-world";
   let packageManager: PackageManager;
+
+  debug("Starting project creation", { projectName, selectedTemplate });
 
   // Interactive mode if no project name provided
   if (!projectName) {
@@ -96,7 +130,7 @@ export async function createApp(
     const template = getTemplate(selectedTemplate);
     if (template && template.comingSoon) {
       console.error(
-        chalk.red(`✖ Template "${selectedTemplate}" is coming soon!`)
+        chalk.red(`\n✖ Template "${selectedTemplate}" is coming soon!`)
       );
       console.log(chalk.yellow("\n📢 Available templates:"));
       getAllTemplates()
@@ -105,7 +139,22 @@ export async function createApp(
           console.log(`  • ${chalk.cyan(t.name)} - ${t.description}`);
         });
     } else {
-      console.error(chalk.red(`✖ Template "${selectedTemplate}" not found.`));
+      console.error(chalk.red(`\n✖ Template "${selectedTemplate}" not found.`));
+
+      // Suggest similar template if typo detected
+      const suggestion = findSimilarTemplate(selectedTemplate);
+      if (suggestion) {
+        console.log(
+          chalk.yellow(`\n💡 Did you mean "${chalk.cyan(suggestion)}"?`)
+        );
+      }
+
+      console.log(chalk.gray("\nAvailable templates:"));
+      getAllTemplates()
+        .filter((t) => t.available)
+        .forEach((t) => {
+          console.log(`  • ${chalk.cyan(t.name)} - ${t.description}`);
+        });
     }
     process.exit(1);
   }
@@ -113,14 +162,19 @@ export async function createApp(
   // Detect or select package manager
   if (options.useNpm) {
     packageManager = "npm";
+    debug("Package manager set to npm via --use-npm flag");
   } else if (options.useYarn) {
     packageManager = "yarn";
+    debug("Package manager set to yarn via --use-yarn flag");
   } else if (options.usePnpm) {
     packageManager = "pnpm";
+    debug("Package manager set to pnpm via --use-pnpm flag");
   } else if (options.useBun) {
     packageManager = "bun";
+    debug("Package manager set to bun via --use-bun flag");
   } else {
     packageManager = detectPackageManager();
+    debug("Auto-detected package manager:", packageManager);
     console.log(
       chalk.bold("[" + chalk.blue("i") + "] ") +
         chalk.gray(`package manager: ${chalk.cyan(packageManager)}\n`)
@@ -128,8 +182,10 @@ export async function createApp(
   }
 
   const pmInfo = getPackageManagerInfo(packageManager);
+  debug("Package manager info:", pmInfo);
 
   const validation = validateProjectName(projectName!);
+  debug("Project name validation:", validation);
   if (!validation.valid) {
     console.error(
       chalk.red(`✖ Invalid project name: ${validation.problems![0]}`)
@@ -138,9 +194,11 @@ export async function createApp(
   }
 
   const projectPath = path.resolve(projectName!);
+  debug("Project path resolved:", projectPath);
 
   // Check if directory exists
   if (fs.existsSync(projectPath)) {
+    debug("Directory already exists, prompting for overwrite");
     const { overwrite } = await prompts({
       type: "confirm",
       name: "overwrite",

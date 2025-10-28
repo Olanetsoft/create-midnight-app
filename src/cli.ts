@@ -1,7 +1,19 @@
 import { Command } from "commander";
 import chalk from "chalk";
-import { createApp } from "./create-app.js";
-import { ErrorHandler } from "./utils/error-handler.js";
+import updateNotifier from "update-notifier";
+import { createApp } from "./create-app";
+import { ErrorHandler } from "./utils/error-handler";
+import * as path from "path";
+import * as fs from "fs";
+
+const pkg = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "../package.json"), "utf-8")
+);
+
+// Check for updates
+updateNotifier({ pkg, updateCheckInterval: 1000 * 60 * 60 * 24 }).notify({
+  isGlobal: true,
+});
 
 const program = new Command();
 
@@ -11,7 +23,7 @@ ErrorHandler.checkNodeVersion(22);
 program
   .name("create-mn-app")
   .description("Create a new Midnight Network application")
-  .version("0.2.4")
+  .version("0.3.0")
   .argument("[project-directory]", "Directory name for your project")
   .option(
     "-t, --template <name>",
@@ -25,7 +37,7 @@ program
   .option("--skip-git", "Skip git repository initialization")
   .option("--verbose", "Show detailed output")
   .action(async (projectDirectory, options) => {
-    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.2.4\n"));
+    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.3.0\n"));
 
     try {
       await createApp(projectDirectory, options);

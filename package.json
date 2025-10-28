@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
@@ -34,11 +34,13 @@
     "chalk": "^4.1.2",
     "commander": "^11.0.0",
     "cross-spawn": "^7.0.3",
+    "fastest-levenshtein": "^1.0.16",
     "fs-extra": "^11.1.1",
     "mustache": "^4.2.0",
     "ora": "^5.4.1",
     "prompts": "^2.4.2",
     "semver": "^7.5.4",
+    "update-notifier": "^7.3.1",
     "validate-npm-package-name": "^5.0.0"
   },
   "devDependencies": {
@@ -47,6 +49,7 @@
     "@types/mustache": "^4.2.2",
     "@types/node": "^20.0.0",
     "@types/prompts": "^2.4.9",
+    "@types/update-notifier": "^6.0.8",
     "@types/validate-npm-package-name": "^4.0.2",
     "typescript": "^5.0.0"
   },
