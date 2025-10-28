@@ -157,11 +157,24 @@ A simple message storage contract demonstrating:
 npx create-mn-app my-app --template hello-world
 ```
 
+#### **Counter DApp**
+
+Real-world example from midnightntwrk demonstrating:
+
+- Increment/decrement state management
+- Zero-knowledge proofs on testnet
+- Compact compiler integration
+- Full CLI interface
+
+```bash
+npx create-mn-app my-counter --template counter
+```
+
+_Automatically cloned from [midnightntwrk/example-counter](https://github.com/midnightntwrk/example-counter)_
+
+**Requirements:** Node.js 22+, Docker, Compact compiler
+
 ### 🔜 Coming Soon
-
-#### **Counter**
-
-Simple increment/decrement app demonstrating state management
 
 #### **Bulletin Board (Bboard)**
 
@@ -177,11 +190,14 @@ Full stack DApp using NFT smart contract library (Crypto Kitties on Midnight)
 
 _These templates are under development. Star the repo to stay updated!_
 
-## Requirements
+## ⚙️ Requirements
 
-- **Node.js** 18.0.0 or higher
+- **Node.js** 22.0.0 or higher (required for all templates)
 - **Docker** (for running the proof server)
-- **npm**, **yarn**, or **pnpm** package manager
+- **npm**, **yarn**, **pnpm**, or **bun** package manager
+- **Compact Compiler** (required for Counter and future templates - CLI will guide installation)
+
+> **Note:** The CLI automatically checks Node.js version on startup and will guide you if an upgrade is needed.
 
 ## 📦 Package Manager Options
 
@@ -276,13 +292,13 @@ If you see "Node.js Version Error":
 # Check your version
 node --version
 
-# Install Node.js 18+ from https://nodejs.org
+# Install Node.js 22+ from https://nodejs.org
 # Or use nvm:
-nvm install --lts
-nvm use --lts
+nvm install 22
+nvm use 22
 ```
 
-The CLI automatically checks for Node.js 18+ before running!
+The CLI automatically checks for Node.js 22+ before running!
 
 ### Environment issues
 

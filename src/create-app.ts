@@ -9,6 +9,9 @@ import { TemplateManager } from "./utils/template-manager.js";
 import { WalletGenerator } from "./installers/wallet-generator.js";
 import { ProofServerSetup } from "./installers/proof-server-setup.js";
 import { GitUtils } from "./utils/git-utils.js";
+import { GitCloner } from "./utils/git-cloner.js";
+import { RequirementChecker } from "./utils/requirement-checker.js";
+import { SetupGuide } from "./utils/setup-guide.js";
 import {
   detectPackageManager,
   getPackageManagerInfo,
@@ -167,14 +170,21 @@ export async function createApp(
     options
   );
 
-  // Success message and instructions
+  // Success message - only show for bundled templates
+  const template = getTemplate(selectedTemplate);
+  if (template && template.type === "bundled") {
+    displayBundledSuccessMessage(projectName!, pmInfo);
+  }
+}
+
+function displayBundledSuccessMessage(projectName: string, pmInfo: any): void {
   console.log();
   console.log(chalk.green.bold("━".repeat(60)));
   console.log(chalk.green.bold("🎉 Success! Your Midnight app is ready."));
   console.log(chalk.green.bold("━".repeat(60)));
   console.log();
   console.log(chalk.white.bold("📂 Project created at:"));
-  console.log(`   ${chalk.cyan(projectPath)}`);
+  console.log(`   ${chalk.cyan(projectName)}`);
   console.log();
   console.log(chalk.white.bold("🚀 Next Steps:"));
   console.log();
@@ -224,20 +234,115 @@ export async function createApp(
 async function createProject(
   projectPath: string,
   projectName: string,
-  template: string,
+  templateName: string,
   packageManager: PackageManager,
   options: CreateAppOptions
 ): Promise<void> {
   const pmInfo = getPackageManagerInfo(packageManager);
+  const template = getTemplate(templateName);
+
+  if (!template) {
+    throw new Error(`Template "${templateName}" not found`);
+  }
 
   // Create project directory
   await fs.ensureDir(projectPath);
   process.chdir(projectPath);
 
+  // Handle different template types
+  if (template.type === "remote") {
+    await createRemoteTemplate(
+      projectPath,
+      projectName,
+      template,
+      packageManager,
+      options
+    );
+  } else {
+    await createBundledTemplate(
+      projectPath,
+      projectName,
+      template,
+      packageManager,
+      options
+    );
+  }
+}
+
+async function createRemoteTemplate(
+  projectPath: string,
+  projectName: string,
+  template: any,
+  packageManager: PackageManager,
+  options: CreateAppOptions
+): Promise<void> {
+  const pmInfo = getPackageManagerInfo(packageManager);
+
+  // Check requirements before cloning
+  if (template.requiresCompactCompiler || template.nodeVersion) {
+    const checks = [];
+
+    if (template.nodeVersion) {
+      checks.push(RequirementChecker.checkNodeVersion(template.nodeVersion));
+    }
+
+    checks.push(RequirementChecker.checkDocker());
+
+    if (template.requiresCompactCompiler) {
+      checks.push(RequirementChecker.checkCompactCompiler());
+    }
+
+    const allPassed = RequirementChecker.displayResults(checks);
+
+    if (!allPassed) {
+      console.log(
+        chalk.yellow("\n⚠ Please install missing requirements and try again.\n")
+      );
+      process.exit(1);
+    }
+  }
+
+  // Clone repository
+  const cloneSpinner = ora(
+    `Cloning ${template.display} from GitHub...`
+  ).start();
+  try {
+    await GitCloner.clone(template.repo!, projectPath);
+    cloneSpinner.succeed(`Cloned ${template.display}`);
+    SetupGuide.displayPostCloneMessage(template.name);
+  } catch (error) {
+    cloneSpinner.fail("Failed to clone repository");
+    throw error;
+  }
+
+  // Initialize git (since we removed .git from cloned repo)
+  if (!options.skipGit) {
+    const gitSpinner = ora("Initializing git repository...").start();
+    try {
+      await GitUtils.init(projectPath);
+      gitSpinner.succeed("Git repository initialized");
+    } catch (error) {
+      gitSpinner.warn("Git repository initialization skipped");
+    }
+  }
+
+  // Display setup instructions
+  SetupGuide.getInstructions(template.name, projectName, packageManager);
+}
+
+async function createBundledTemplate(
+  projectPath: string,
+  projectName: string,
+  template: any,
+  packageManager: PackageManager,
+  options: CreateAppOptions
+): Promise<void> {
+  const pmInfo = getPackageManagerInfo(packageManager);
+
   // Initialize template
   const templateSpinner = ora("Creating project structure...").start();
   try {
-    const templateManager = new TemplateManager(template);
+    const templateManager = new TemplateManager(template.name);
     await templateManager.scaffold(projectPath, projectName);
     templateSpinner.succeed("Project structure created");
   } catch (error) {

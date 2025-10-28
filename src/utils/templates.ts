@@ -6,20 +6,35 @@ export interface Template {
   comingSoon?: boolean;
 }
 
+export interface Template {
+  name: string;
+  display: string;
+  description: string;
+  available: boolean;
+  comingSoon?: boolean;
+  type: "bundled" | "remote";
+  repo?: string;
+  nodeVersion?: number;
+  requiresCompactCompiler?: boolean;
+}
+
 export const templates: Template[] = [
   {
     name: "hello-world",
     display: "Hello World",
     description: "Simple starter template with basic contract deployment",
     available: true,
+    type: "bundled",
   },
   {
     name: "counter",
-    display: "Counter",
-    description:
-      "Simple increment/decrement app demonstrating state management",
-    available: false,
-    comingSoon: true,
+    display: "Counter DApp",
+    description: "Increment/decrement app demonstrating state management",
+    available: true,
+    type: "remote",
+    repo: "midnightntwrk/example-counter",
+    nodeVersion: 22,
+    requiresCompactCompiler: true,
   },
   {
     name: "bboard",
@@ -28,6 +43,8 @@ export const templates: Template[] = [
       "Bulletin board with multi-user interactions and privacy patterns",
     available: false,
     comingSoon: true,
+    type: "remote",
+    repo: "midnightntwrk/example-bboard",
   },
   {
     name: "dex",
@@ -35,6 +52,8 @@ export const templates: Template[] = [
     description: "Decentralized exchange using OpenZeppelin FungibleToken",
     available: false,
     comingSoon: true,
+    type: "remote",
+    repo: "midnightntwrk/example-dex",
   },
   {
     name: "midnight-kitties",
@@ -43,6 +62,8 @@ export const templates: Template[] = [
       "Full stack DApp using NFT smart contract library (Crypto Kitties on Midnight)",
     available: false,
     comingSoon: true,
+    type: "remote",
+    repo: "midnightntwrk/midnight-kitties",
   },
 ];
 

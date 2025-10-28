@@ -5,13 +5,13 @@ import { ErrorHandler } from "./utils/error-handler.js";
 
 const program = new Command();
 
-// Check Node.js version before anything else
-ErrorHandler.checkNodeVersion(18);
+// Check Node.js version before anything else (require 22+)
+ErrorHandler.checkNodeVersion(22);
 
 program
   .name("create-midnight-app")
   .description("Create a new Midnight Network application")
-  .version("0.1.0")
+  .version("0.2.0")
   .argument("[project-directory]", "Directory name for your project")
   .option(
     "-t, --template <name>",
