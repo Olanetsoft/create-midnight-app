@@ -19,8 +19,8 @@ import * as fs from "fs";
 import * as path from "path";
 import * as Rx from "rxjs";
 import { type Wallet } from "@midnight-ntwrk/wallet-api";
-import { MidnightProviders } from "./providers/midnight-providers";
-import { EnvironmentManager } from "./utils/environment";
+import { MidnightProviders } from "./providers/midnight-providers.js";
+import { EnvironmentManager } from "./utils/environment.js";
 
 // Fix WebSocket for Node.js environment
 // @ts-ignore

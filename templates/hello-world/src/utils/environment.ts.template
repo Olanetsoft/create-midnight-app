@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { NetworkConfig } from "../providers/midnight-providers";
+import { NetworkConfig } from "../providers/midnight-providers.js";
 
 export class EnvironmentManager {
   static getNetworkConfig(): NetworkConfig {

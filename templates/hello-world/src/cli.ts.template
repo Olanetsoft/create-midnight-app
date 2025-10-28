@@ -15,8 +15,8 @@ import { WebSocket } from "ws";
 import * as path from "path";
 import * as fs from "fs";
 import * as Rx from "rxjs";
-import { MidnightProviders } from "./providers/midnight-providers";
-import { EnvironmentManager } from "./utils/environment";
+import { MidnightProviders } from "./providers/midnight-providers.js";
+import { EnvironmentManager } from "./utils/environment.js";
 
 // Fix WebSocket for Node.js environment
 // @ts-ignore

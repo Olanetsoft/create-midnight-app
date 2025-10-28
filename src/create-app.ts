@@ -82,27 +82,53 @@ export async function createApp(
 
   // Success message and instructions
   console.log();
+  console.log(chalk.green.bold("━".repeat(60)));
   console.log(chalk.green.bold("🎉 Success! Your Midnight app is ready."));
+  console.log(chalk.green.bold("━".repeat(60)));
   console.log();
-  console.log("Inside that directory, you can run several commands:");
+  console.log(chalk.white.bold("📂 Project created at:"));
+  console.log(`   ${chalk.cyan(projectPath)}`);
   console.log();
-  console.log(chalk.cyan("  npm run dev"));
-  console.log("    Starts development with hot reloading and auto-deployment.");
+  console.log(chalk.white.bold("🚀 Next Steps:"));
   console.log();
-  console.log(chalk.cyan("  npm run setup"));
-  console.log("    Compiles, builds, and deploys your contract.");
+  console.log(chalk.yellow("  1.") + " Navigate to your project:");
+  console.log(`     ${chalk.cyan(`cd ${projectName}`)}`);
   console.log();
-  console.log(chalk.cyan("  npm run cli"));
-  console.log("    Opens an interactive CLI to test your contract.");
+  console.log(chalk.yellow("  2.") + " Start the development server:");
+  console.log(`     ${chalk.cyan("npm run dev")}`);
+  console.log(
+    chalk.gray("     (Starts proof server + watches for file changes)")
+  );
   console.log();
-  console.log("We suggest that you begin by typing:");
+  console.log(chalk.white.bold("📚 Available Commands:"));
   console.log();
-  console.log(chalk.cyan(`  cd ${projectName}`));
-  console.log(chalk.cyan("  npm run dev"));
+  console.log(`  ${chalk.cyan("npm run setup")}`);
+  console.log(chalk.gray("    Compile contract, build, and deploy"));
   console.log();
-  console.log(chalk.gray("Need help? Visit https://docs.midnight.network"));
+  console.log(`  ${chalk.cyan("npm run cli")}`);
+  console.log(chalk.gray("    Interactive CLI to test your contract"));
   console.log();
-  console.log("Happy coding! 🚀");
+  console.log(`  ${chalk.cyan("npm run compile")}`);
+  console.log(chalk.gray("    Compile Compact contracts"));
+  console.log();
+  console.log(`  ${chalk.cyan("npm run build")}`);
+  console.log(chalk.gray("    Build TypeScript to JavaScript"));
+  console.log();
+  console.log(chalk.green.bold("━".repeat(60)));
+  console.log();
+  console.log(chalk.magenta("💡 Tips:"));
+  console.log(
+    chalk.gray("   • Make sure Docker is running for the proof server")
+  );
+  console.log(
+    chalk.gray("   • Check .env for your wallet seed and network config")
+  );
+  console.log(
+    chalk.gray("   • Visit https://docs.midnight.network for documentation")
+  );
+  console.log();
+  console.log(chalk.white("Happy coding! ") + chalk.yellow("🌙✨"));
+  console.log();
 }
 
 async function createProject(
