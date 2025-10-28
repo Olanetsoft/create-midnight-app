@@ -51,31 +51,40 @@ Your generated project includes:
 Once your project is created, you can run:
 
 ### `npm run dev`
+
 Starts the development server with:
+
 - Docker-based proof server on port 6300
 - File watcher for automatic recompilation
 - Hot reloading for contract changes
 
 ### `npm run setup`
+
 Complete setup pipeline:
+
 1. Compiles Compact contracts
 2. Builds TypeScript to JavaScript
 3. Deploys contracts to the network
 
 ### `npm run cli`
+
 Opens an interactive command-line interface to:
+
 - Connect your wallet
 - Store messages in the contract
 - Retrieve stored messages
 - Test contract functionality
 
 ### `npm run compile`
+
 Compiles your Compact smart contracts from `contracts/` to `contracts/managed/`
 
 ### `npm run build`
+
 Builds your TypeScript source code to JavaScript in the `dist/` directory
 
 ### `npm run deploy`
+
 Deploys your compiled contract to the Midnight testnet
 
 ## Project Structure
@@ -102,7 +111,9 @@ my-midnight-app/
 ## Templates
 
 ### Hello World (Default)
+
 A simple message storage contract demonstrating:
+
 - State management
 - Public and private data
 - Contract deployment
@@ -166,7 +177,9 @@ PROOF_SERVER_URL=http://localhost:6300
 ## Troubleshooting
 
 ### Port 6300 already in use
+
 If you see "Bind for 0.0.0.0:6300 failed: port is already allocated":
+
 ```bash
 # Stop the existing proof server
 docker ps
@@ -176,14 +189,18 @@ docker stop <container-id>
 ```
 
 ### Module resolution errors
+
 Make sure you're using Node.js 18+ and the project was created with the latest version:
+
 ```bash
 node --version
 npx create-mn-app@latest my-app
 ```
 
 ### Docker not running
+
 Ensure Docker Desktop is running before starting the development server:
+
 ```bash
 docker --version
 ```
@@ -206,4 +223,3 @@ MIT © [Olanetsoft](https://github.com/Olanetsoft)
 ---
 
 Built with ❤️ for the Midnight Network community 🌙✨
-
