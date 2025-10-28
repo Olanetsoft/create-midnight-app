@@ -10,7 +10,6 @@ import { nativeToken } from "@midnight-ntwrk/ledger";
 import { WebSocket } from "ws";
 import * as Rx from "rxjs";
 import chalk from "chalk";
-import { MidnightProviders } from "./providers/midnight-providers.js";
 import { EnvironmentManager } from "./utils/environment.js";
 
 // Fix WebSocket for Node.js environment
@@ -39,23 +38,15 @@ async function checkBalance() {
     // Get network configuration
     const networkConfig = EnvironmentManager.getNetworkConfig();
 
-    // Create providers
-    const providers = MidnightProviders.create({
-      indexerUrl: networkConfig.indexerUrl,
-      indexerWsUrl: networkConfig.indexerWsUrl,
-      prooServerUrl: networkConfig.proofServerUrl,
-      walletSeed: seed,
-      zkConfigPath: networkConfig.zkConfigPath,
-    });
-
-    // Build wallet
+    // Build wallet from seed
     const wallet = await WalletBuilder.buildFromSeed(
-      getLedgerNetworkId(),
+      networkConfig.indexer,
+      networkConfig.indexerWS,
+      networkConfig.proofServer,
+      networkConfig.node,
       seed,
-      providers.privateStateProvider,
-      providers.zkConfigProvider,
-      providers.publicDataProvider,
-      { coinPublicKey: providers.coinPublicKey }
+      getZswapNetworkId(),
+      "info"
     );
 
     wallet.start();
