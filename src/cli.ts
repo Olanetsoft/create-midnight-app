@@ -11,7 +11,7 @@ ErrorHandler.checkNodeVersion(22);
 program
   .name("create-midnight-app")
   .description("Create a new Midnight Network application")
-  .version("0.2.0")
+  .version("0.2.2")
   .argument("[project-directory]", "Directory name for your project")
   .option(
     "-t, --template <name>",

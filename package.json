@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
@@ -55,6 +55,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/midnightntwrk/create-midnight-app.git"
+    "url": "https://github.com/Olanetsoft/create-mn-app.git"
+  },
+  "homepage": "https://github.com/Olanetsoft/create-mn-app#readme",
+  "bugs": {
+    "url": "https://github.com/Olanetsoft/create-mn-app/issues"
   }
 }
