@@ -34,7 +34,8 @@
     "@midnight-ntwrk/wallet-api": "5.0.0",
     "@midnight-ntwrk/zswap": "^4.0.0",
     "ws": "^8.18.3",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "chalk": "^5.3.0"
   },
   "devDependencies": {
     "@types/node": "^24.4.0",
