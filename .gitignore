@@ -23,6 +23,7 @@ Thumbs.db
 *.swo
 
 # Test output
+test-*/
 test-app/
 
 # Logs

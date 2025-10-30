@@ -1,6 +1,6 @@
 {
   "name": "create-mn-app",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Create Midnight Network applications with zero configuration",
   "main": "dist/index.js",
   "bin": {
@@ -28,7 +28,10 @@
     "cli",
     "create-app"
   ],
-  "author": "Midnight Network",
+  "author": "Idris Olubisi",
+  "contributors": [
+    "Midnight Network"
+  ],
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.2",
@@ -58,10 +61,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Olanetsoft/create-mn-app.git"
+    "url": "https://github.com/midnightntwrk/create-mn-app.git"
   },
-  "homepage": "https://github.com/Olanetsoft/create-mn-app#readme",
+  "homepage": "https://github.com/midnightntwrk/create-mn-app#readme",
   "bugs": {
-    "url": "https://github.com/Olanetsoft/create-mn-app/issues"
+    "url": "https://github.com/midnightntwrk/create-mn-app/issues"
   }
 }

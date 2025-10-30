@@ -135,8 +135,8 @@ Testnet faucet typically takes 2-5 minutes. The deploy script will auto-detect w
 ## Links
 
 - [Midnight Docs](https://docs.midnight.network)
-- [Discord Community](https://discord.gg/midnight)
-- [GitHub](https://github.com/Olanetsoft/create-mn-app)
+- [Discord Community](https://discord.com/invite/midnightnetwork)
+- [GitHub](https://github.com/midnightntwrk/create-mn-app)
 
 ## License
 
