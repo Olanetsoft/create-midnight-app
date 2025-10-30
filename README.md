@@ -121,16 +121,16 @@ Options:
 ## Project Structure
 
 ```
-my-app/
-├── contracts/
-│   ├── hello-world.compact
-│   └── managed/
+create-mn-app/
+├── bin/
+│   └── create-midnight-app.js    # CLI entry point
 ├── src/
-│   ├── cli.ts
-│   ├── deploy.ts
-│   ├── providers/
-│   └── utils/
-├── .env
+│   ├── cli.ts                     # Main CLI logic
+│   ├── create-app.ts              # Project scaffolding
+│   ├── installers/                # Package & proof server setup
+│   └── utils/                     # Helpers & templates
+├── templates/
+│   └── hello-world/               # Bundled template
 ├── package.json
 └── tsconfig.json
 ```
