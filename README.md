@@ -135,26 +135,6 @@ my-app/
 └── tsconfig.json
 ```
 
-## Troubleshooting
-
-### Node.js version error
-
-```bash
-node --version  # Check version
-nvm install 22 && nvm use 22  # Install Node.js 22+
-```
-
-### Port 6300 in use
-
-```bash
-docker ps
-docker stop <container-id>
-```
-
-### Waiting for faucet funds
-
-Testnet faucet typically takes 2-5 minutes. The deploy script will auto-detect when funds arrive.
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
