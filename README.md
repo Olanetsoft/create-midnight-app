@@ -48,13 +48,13 @@ npx create-mn-app my-app
 
 ### Counter DApp
 
-Real-world example from midnightntwrk with increment/decrement state and zkProofs.
+Real-world example with increment/decrement state and zkProofs.
 
 ```bash
 npx create-mn-app my-app --template counter
 ```
 
-Cloned from [midnightntwrk/example-counter](https://github.com/midnightntwrk/example-counter). Requires Node.js 22+, Docker, and Compact compiler.
+Cloned from [Midnight Network's example-counter](https://github.com/midnightntwrk/example-counter). Requires Node.js 22+, Docker, and Compact compiler.
 
 After creation:
 
@@ -136,7 +136,7 @@ Testnet faucet typically takes 2-5 minutes. The deploy script will auto-detect w
 
 - [Midnight Docs](https://docs.midnight.network)
 - [Discord Community](https://discord.com/invite/midnightnetwork)
-- [GitHub](https://github.com/midnightntwrk/create-mn-app)
+- [GitHub](https://github.com/Olanetsoft/create-mn-app)
 
 ## License
 
