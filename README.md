@@ -3,13 +3,36 @@
 Scaffold Midnight Network applications.
 
 [![npm version](https://img.shields.io/npm/v/create-mn-app.svg)](https://www.npmjs.com/package/create-mn-app)
+[![npm downloads](https://img.shields.io/npm/dw/create-mn-app.svg)](https://www.npmjs.com/package/create-mn-app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/node/v/create-mn-app.svg)](https://nodejs.org/)
+
+## Installation
+
+**Recommended (no install needed):**
 
 ```bash
 npx create-mn-app my-app
 cd my-app
 npm run setup
 ```
+
+**Or install globally:**
+
+```bash
+npm i -g create-mn-app
+create-mn-app my-app
+```
+
+> Using `npx` is recommended - it always runs the latest version without needing updates.
+
+## Why create-mn-app?
+
+- **Zero Configuration**: Start building immediately without complex setup
+- **Best Practices**: Pre-configured TypeScript, hot reloading, and project structure
+- **Production Ready**: Includes wallet generation, environment management, and deployment scripts
+- **Developer Experience**: Interactive prompts, health checks, and helpful error messages
+- **Stay Updated**: Built-in update notifier keeps you on the latest version
 
 ## Features
 
@@ -131,6 +154,16 @@ docker stop <container-id>
 ### Waiting for faucet funds
 
 Testnet faucet typically takes 2-5 minutes. The deploy script will auto-detect when funds arrive.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## Links
 

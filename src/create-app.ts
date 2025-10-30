@@ -106,7 +106,6 @@ export async function createApp(
         : t.display,
       value: t.name,
       description: t.description,
-      disabled: !t.available,
     }));
 
     const response = await prompts({
