@@ -7,13 +7,13 @@ const semver = require("semver");
 // Check Node.js version
 const currentNodeVersion = process.versions.node;
 
-if (!semver.satisfies(currentNodeVersion, ">=18.0.0")) {
+if (!semver.satisfies(currentNodeVersion, ">=22.0.0")) {
   console.error(
     "\x1b[31m" + // Red
       "You are running Node " +
       currentNodeVersion +
       ".\n" +
-      "Create Midnight App requires Node 18 or higher.\n" +
+      "Create Midnight App requires Node 22 or higher.\n" +
       "Please update your version of Node." +
       "\x1b[0m" // Reset
   );

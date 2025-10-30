@@ -6,7 +6,7 @@ A Midnight Network application created with `create-mn-app`.
 
 ### Prerequisites
 
-- Node.js 18+ installed
+- Node.js 22+ installed
 - Docker installed (for proof server)
 
 ### Quick Start

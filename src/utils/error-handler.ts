@@ -5,7 +5,7 @@ export class ErrorHandler {
   /**
    * Check if Node.js version meets requirements
    */
-  static checkNodeVersion(minVersion: number = 18): void {
+  static checkNodeVersion(minVersion: number = 22): void {
     const version = process.version;
     const major = parseInt(version.slice(1).split(".")[0]);
 

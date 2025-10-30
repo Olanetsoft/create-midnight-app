@@ -13,13 +13,13 @@ interface HealthCheck {
 const checks: HealthCheck[] = [
   {
     name: "Node.js Version",
-    message: "Checking Node.js version (>= 18.0.0)...",
+    message: "Checking Node.js version (>= 22.0.0)...",
     check: async () => {
       const version = process.version;
       const major = parseInt(version.slice(1).split(".")[0]);
-      return major >= 18;
+      return major >= 22;
     },
-    error: "Node.js 18 or higher is required. Please upgrade Node.js.",
+    error: "Node.js 22 or higher is required. Please upgrade Node.js.",
   },
   {
     name: "Docker",
