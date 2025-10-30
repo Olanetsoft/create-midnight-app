@@ -5,6 +5,8 @@ nodemon.json
 
 # Test files
 test-app/
+test-*/
+*.test.ts
 
 # Development files
 .env*
@@ -13,6 +15,9 @@ test-app/
 # Git
 .git/
 .gitignore
+
+# GitHub
+.github/
 
 # IDE
 .vscode/

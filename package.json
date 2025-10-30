@@ -26,7 +26,12 @@
     "privacy",
     "scaffold",
     "cli",
-    "create-app"
+    "create-app",
+    "zkp",
+    "dapp",
+    "web3",
+    "smart-contracts",
+    "typescript"
   ],
   "author": "Idris Olubisi",
   "contributors": [
