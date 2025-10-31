@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2025-10-31
+
+### Added
+
+- **Automatic Compact compiler version update** feature
+  - Detects version mismatches before project creation
+  - Prompts user with clear explanation when outdated version found
+  - Automatically updates Compact compiler with user confirmation
+  - Shows real-time progress during update process
+  - Verifies update success and re-checks requirements
+- New `CompactUpdater` utility class for version management
+- Compact version requirement specification in template configuration (Counter: 0.23.0+)
+- Enhanced version comparison logic with semantic versioning support
+
+### Changed
+
+- Improved requirement checker to display version requirements in error messages
+- Enhanced README with automatic update feature documentation
+- Updated Features section highlighting smart dependency management
+
+### Fixed
+
+- Resolves compilation errors for users with outdated Compact versions (e.g., 0.15.0 vs 0.23.0 requirement)
+- Prevents cryptic "language version mismatch" errors by catching issues before setup
+
 ## [0.3.4] - 2025-10-31
 
 ### Added
@@ -153,7 +178,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Project setup and configuration
 
-[Unreleased]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.4...HEAD
+[Unreleased]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.5...HEAD
+[0.3.5]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.4...v0.3.5
 [0.3.4]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.3...v0.3.4
 [0.3.3]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.2...v0.3.3
 [0.3.2]: https://github.com/Olanetsoft/create-mn-app/compare/v0.3.1...v0.3.2

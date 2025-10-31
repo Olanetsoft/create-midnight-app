@@ -52,7 +52,7 @@ program
   .option("--skip-git", "Skip git repository initialization")
   .option("--verbose", "Show detailed output")
   .action(async (projectDirectory, options) => {
-    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.3.4\n"));
+    console.log(chalk.bold.cyan("\ncreate-mn-app") + chalk.gray(" v0.3.5\n"));
 
     try {
       await createApp(projectDirectory, options);
