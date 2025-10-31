@@ -4,7 +4,7 @@ Scaffold Midnight Network applications.
 
 [![npm version](https://img.shields.io/npm/v/create-mn-app.svg)](https://www.npmjs.com/package/create-mn-app)
 [![npm downloads](https://img.shields.io/npm/dw/create-mn-app.svg)](https://www.npmjs.com/package/create-mn-app)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Node.js](https://img.shields.io/node/v/create-mn-app.svg)](https://nodejs.org/)
 
 ## Installation
@@ -153,4 +153,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT ©
+Apache-2.0 © 2025 Midnight Foundation
+
+See [LICENSE](LICENSE) for more information.

@@ -37,7 +37,7 @@
   "contributors": [
     "Midnight Network"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^11.0.0",

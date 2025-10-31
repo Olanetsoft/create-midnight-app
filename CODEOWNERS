@@ -1,0 +1,48 @@
+# Code Owners
+
+#
+
+# This file defines the individuals or teams responsible for code in this repository.
+
+# Code owners are automatically requested for review when someone opens a pull request
+
+# that modifies code that they own.
+
+#
+
+# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repo
+
+- @Olanetsoft
+
+# Core CLI and scaffolding logic
+
+/src/cli.ts @Olanetsoft
+/src/create-app.ts @Olanetsoft
+/bin/ @Olanetsoft
+
+# Template system
+
+/src/templates/ @Olanetsoft
+/src/utils/template-manager.ts @Olanetsoft
+/templates/ @Olanetsoft
+
+# Installer components
+
+/src/installers/ @Olanetsoft
+
+# Documentation
+
+/README.md @Olanetsoft
+/CONTRIBUTING.md @Olanetsoft
+/CHANGELOG.md @Olanetsoft
+
+# Configuration files
+
+package.json @Olanetsoft
+tsconfig.json @Olanetsoft
+
+# GitHub workflows and templates
+
+/.github/ @Olanetsoft
