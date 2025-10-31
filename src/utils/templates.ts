@@ -31,6 +31,7 @@ export interface Template {
   repo?: string;
   nodeVersion?: number;
   requiresCompactCompiler?: boolean;
+  compactVersion?: string;
 }
 
 export const templates: Template[] = [
@@ -50,6 +51,7 @@ export const templates: Template[] = [
     repo: "midnightntwrk/example-counter",
     nodeVersion: 22,
     requiresCompactCompiler: true,
+    compactVersion: "0.23.0",
   },
   {
     name: "bboard",

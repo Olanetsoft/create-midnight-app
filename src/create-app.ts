@@ -39,6 +39,7 @@ import {
   getTemplate,
   isValidTemplate,
 } from "./utils/templates.js";
+import { CompactUpdater } from "./utils/compact-updater.js";
 
 export interface CreateAppOptions {
   template?: string;
@@ -362,16 +363,66 @@ async function createRemoteTemplate(
     checks.push(RequirementChecker.checkDocker());
 
     if (template.requiresCompactCompiler) {
-      checks.push(RequirementChecker.checkCompactCompiler());
+      checks.push(
+        RequirementChecker.checkCompactCompiler(template.compactVersion)
+      );
     }
 
     const allPassed = RequirementChecker.displayResults(checks);
 
     if (!allPassed) {
-      console.log(
-        chalk.yellow("\n⚠ Please install missing requirements and try again.\n")
-      );
-      process.exit(1);
+      // Check if the issue is Compact version mismatch
+      if (template.requiresCompactCompiler && template.compactVersion) {
+        const currentVersion = CompactUpdater.getCurrentVersion();
+        if (
+          currentVersion &&
+          CompactUpdater.needsUpdate(currentVersion, template.compactVersion)
+        ) {
+          // Offer to update Compact automatically
+          const updateSuccess = await CompactUpdater.handleVersionMismatch(
+            currentVersion,
+            template.compactVersion
+          );
+
+          if (updateSuccess) {
+            // Re-check requirements after update
+            console.log(chalk.cyan("\n[✓] Re-checking requirements...\n"));
+            const recheckPassed = RequirementChecker.displayResults([
+              RequirementChecker.checkCompactCompiler(template.compactVersion),
+            ]);
+
+            if (!recheckPassed) {
+              console.log(
+                chalk.red(
+                  "\n❌ Requirements still not met after update. Please check manually.\n"
+                )
+              );
+              process.exit(1);
+            }
+          } else {
+            console.log(
+              chalk.yellow(
+                "\n⚠ Please update Compact manually and try again.\n"
+              )
+            );
+            process.exit(1);
+          }
+        } else {
+          console.log(
+            chalk.yellow(
+              "\n⚠ Please install missing requirements and try again.\n"
+            )
+          );
+          process.exit(1);
+        }
+      } else {
+        console.log(
+          chalk.yellow(
+            "\n⚠ Please install missing requirements and try again.\n"
+          )
+        );
+        process.exit(1);
+      }
     }
   }
 

@@ -36,12 +36,16 @@ create-mn-app my-app
 
 ## Features
 
-- Interactive project setup with template selection
-- Auto-detects package manager (npm/yarn/pnpm/bun)
-- Environment health checks
-- TypeScript with hot reloading
-- Pre-configured Compact contracts
-- Secure wallet generation
+- **Interactive project setup** with template selection
+- **Auto-detects package manager** (npm/yarn/pnpm/bun)
+- **Smart dependency management**:
+  - Checks Node.js, Docker, and Compact compiler versions
+  - **Automatic Compact compiler updates** when version mismatch detected
+  - Prompts user before updating with clear explanations
+- **TypeScript** with hot reloading
+- **Pre-configured Compact contracts**
+- **Secure wallet generation**
+- **Environment health checks**
 
 ## Quick Start
 
@@ -95,10 +99,13 @@ npm install
 
 ## Requirements
 
-- Node.js 22+
-- Docker (for proof server)
-- npm/yarn/pnpm/bun
-- Compact Compiler (for Counter template - auto-guided installation)
+- **Node.js 22+** - Required for all templates
+- **Docker** - Required for running the proof server
+- **npm/yarn/pnpm/bun** - Package manager (auto-detected)
+- **Compact Compiler 0.23.0+** - Required for Counter template
+  - **Auto-update available**: If you have an older version, the CLI will offer to update it automatically
+  - Version compatibility checked before project creation
+  - Manual installation: See [Compact releases](https://github.com/midnightntwrk/compact/releases/latest)
 
 ## CLI Options
 

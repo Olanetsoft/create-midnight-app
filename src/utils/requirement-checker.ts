@@ -68,18 +68,34 @@ export class RequirementChecker {
   }
 
   /**
-   * Check Compact compiler availability
+   * Check Compact compiler availability and version
    */
-  static checkCompactCompiler(): RequirementCheck {
+  static checkCompactCompiler(minVersion?: string): RequirementCheck {
     try {
-      const version = execSync("compact compile --version", {
+      const versionOutput = execSync("compact compile --version", {
         encoding: "utf-8",
       }).trim();
+
+      // Extract version number (e.g., "Compactc version: 0.23.0" -> "0.23.0")
+      const versionMatch = versionOutput.match(/(\d+\.\d+\.\d+)/);
+      const currentVersion = versionMatch ? versionMatch[1] : versionOutput;
+
+      // Check version compatibility
+      let isCompatible = true;
+      let versionWarning = "";
+
+      if (minVersion && currentVersion) {
+        isCompatible = this.compareVersions(currentVersion, minVersion) >= 0;
+        if (!isCompatible) {
+          versionWarning = ` (requires ${minVersion}+, found ${currentVersion})`;
+        }
+      }
+
       return {
-        name: "Compact Compiler",
+        name: `Compact Compiler${versionWarning}`,
         required: true,
-        found: true,
-        version: version,
+        found: isCompatible,
+        version: currentVersion,
         installCommand:
           "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh",
       };
@@ -92,6 +108,25 @@ export class RequirementChecker {
           "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh",
       };
     }
+  }
+
+  /**
+   * Compare semantic versions (e.g., "0.23.0" vs "0.15.0")
+   * Returns: 1 if v1 > v2, -1 if v1 < v2, 0 if equal
+   */
+  private static compareVersions(v1: string, v2: string): number {
+    const parts1 = v1.split(".").map(Number);
+    const parts2 = v2.split(".").map(Number);
+
+    for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+      const part1 = parts1[i] || 0;
+      const part2 = parts2[i] || 0;
+
+      if (part1 > part2) return 1;
+      if (part1 < part2) return -1;
+    }
+
+    return 0;
   }
 
   /**
